@@ -1,5 +1,36 @@
-/* sfc-style:D:\MyLearningSpace\Programming\ObsidianPluginDev\测试\.obsidian\plugins\obsidian-vue-starter\src\App.vue?type=style&index=0 */
-h2[data-v-f8994186] {
-  color: lightcoral;
+/* sfc-style:/Users/liugan/Dev/.obsidian/plugins/obsidian-jenni-plugin/src/App.vue?type=style&index=0 */
+.container[data-v-ea994a51] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
-/*# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsic2ZjLXN0eWxlOkQ6XFxNeUxlYXJuaW5nU3BhY2VcXFByb2dyYW1taW5nXFxPYnNpZGlhblBsdWdpbkRldlxcXHU2RDRCXHU4QkQ1XFwub2JzaWRpYW5cXHBsdWdpbnNcXG9ic2lkaWFuLXZ1ZS1zdGFydGVyXFxzcmNcXEFwcC52dWU/dHlwZT1zdHlsZSZpbmRleD0wIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyJcbmgyW2RhdGEtdi1mODk5NDE4Nl0ge1xyXG4gICAgY29sb3I6IGxpZ2h0Y29yYWw7XG59XHJcbiJdLAogICJtYXBwaW5ncyI6ICI7QUFDQTtBQUNJO0FBQUE7IiwKICAibmFtZXMiOiBbXQp9Cg== */
+.intro[data-v-ea994a51] {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.input-area[data-v-ea994a51] {
+  display: flex;
+  align-items: center;
+}
+.textarea[data-v-ea994a51] {
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  padding: 0px;
+  box-sizing: content-box;
+}
+button[data-v-ea994a51] {
+  height: 100%;
+  border: none;
+  border-radius: 4px;
+  margin-left: 10px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+button[data-v-ea994a51]:hover {
+  background-color: #0056b3;
+}
+/*# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsic2ZjLXN0eWxlOi9Vc2Vycy9saXVnYW4vRGV2Ly5vYnNpZGlhbi9wbHVnaW5zL29ic2lkaWFuLWplbm5pLXBsdWdpbi9zcmMvQXBwLnZ1ZT90eXBlPXN0eWxlJmluZGV4PTAiXSwKICAic291cmNlc0NvbnRlbnQiOiBbIlxuLmNvbnRhaW5lcltkYXRhLXYtZWE5OTRhNTFdIHtcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICBoZWlnaHQ6IDEwMHZoO1xufVxuLmludHJvW2RhdGEtdi1lYTk5NGE1MV0ge1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBtYXJnaW4tYm90dG9tOiAyMHB4O1xufVxuLmlucHV0LWFyZWFbZGF0YS12LWVhOTk0YTUxXSB7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xufVxuLnRleHRhcmVhW2RhdGEtdi1lYTk5NGE1MV0ge1xuICAgIGhlaWdodDogMTAwJTtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgdG9wOiAwcHg7XG4gICAgcGFkZGluZzogMHB4O1xuICAgIGJveC1zaXppbmc6IGNvbnRlbnQtYm94O1xufVxuYnV0dG9uW2RhdGEtdi1lYTk5NGE1MV0ge1xuICAgIGhlaWdodDogMTAwJTtcbiAgICBib3JkZXI6IG5vbmU7XG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xuICAgIG1hcmdpbi1sZWZ0OiAxMHB4O1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMwMDdiZmY7XG4gICAgY29sb3I6IHdoaXRlO1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbn1cbmJ1dHRvbltkYXRhLXYtZWE5OTRhNTFdOmhvdmVyIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDA1NmIzO1xufVxuIl0sCiAgIm1hcHBpbmdzIjogIjtBQUNBO0FBQ0k7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBRUo7QUFDSTtBQUNBO0FBQUE7QUFFSjtBQUNJO0FBQ0E7QUFBQTtBQUVKO0FBQ0k7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBRUo7QUFDSTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBRUo7QUFDSTtBQUFBOyIsCiAgIm5hbWVzIjogW10KfQo= */
