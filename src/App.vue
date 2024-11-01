@@ -10,7 +10,6 @@
 <script setup lang="tsx">
 import { ref, nextTick } from 'vue';
 import{setIcon} from 'obsidian';
-import axios from 'axios';
 const text = ref('');
 const content = ref('');
 nextTick(() => {

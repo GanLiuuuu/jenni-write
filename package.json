@@ -12,6 +12,7 @@
 	"author": "",
 	"license": "MIT",
 	"dependencies": {
+		"openai": "^4.69.0",
 		"vue": "^3.2.31"
 	},
 	"devDependencies": {
