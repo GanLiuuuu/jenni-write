@@ -116,6 +116,7 @@ import OpenAI from 'openai';
 const openai = new OpenAI({
  apiKey: ,
  baseURL: ,
+dangerouslyAllowBrowser: true,
  //gate way
 //  baseURL: '/api/v1/chat/completions',
 //  defaultHeaders: createHeaders({
