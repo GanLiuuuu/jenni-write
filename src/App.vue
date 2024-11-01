@@ -10,6 +10,7 @@
 <script setup lang="tsx">
 import { ref, nextTick } from 'vue';
 import{setIcon} from 'obsidian';
+import axios from 'axios';
 const text = ref('');
 const content = ref('');
 nextTick(() => {
@@ -21,11 +22,13 @@ const sendTextMessage = () => {
         return;
     }
     createContent(text.value);
+    createContent_left(text.value);
+    gpt();
     // 在这里添加WebSocket发送消息的逻辑
     text.value = ""; // 清空输入框
 };
 
-const createContent = (massage) => {
+const createContent = (massage: string) => {
     let html = "";
         html = `
             <div class="chat-row" style="display: flex; align-items: center; justify-content: space-between; padding: 5px 0;">
@@ -38,13 +41,101 @@ const createContent = (massage) => {
                     <img src="https://eu.ui-avatars.com/api/?name=John+Noe&size=250" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
                 </div>
             </div>`;
-    
-    content.value += html;
+        content.value += html;
+
     const scrollableWindow = document.getElementById('history');
     setTimeout(()=>{
-                        scrollableWindow.scrollTop = scrollableWindow.scrollHeight;
-                    },0)
+        scrollableWindow.scrollTop = scrollableWindow.scrollHeight;
+    },0)
 };
+const createContent_left = (massage: string) => {
+    let html1 = "";
+ 
+        html1 = `
+        <div class="chat-row" style="display: flex; align-items: center; justify-content: space-between; padding: 5px 0;">
+            <div class="chat-avatar" style="width: 30px; height: 30px; ">
+                <img src="https://eu.ui-avatars.com/api/?name=John+Noe&size=250" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+            </div>
+            <div class="chat-message" style="flex: 1; text-align: left; padding-left: 10px; max-width: 90%; ">
+                <div class="tip left" style="background-color: #f0f0f0; padding: 10px; border-radius: 8px; display: inline-block; max-width: 70%; word-wrap:break-word; overflow-wrap: break-word; color: black;">
+                    ${massage}
+                </div>
+            </div>
+            
+        </div>`;
+        
+    content.value += html1;
+    const scrollableWindow = document.getElementById('history');
+    setTimeout(()=>{
+        scrollableWindow.scrollTop = scrollableWindow.scrollHeight;
+    },0)
+    
+};
+// async function gpt() {
+//     const chatCompletion = await openai.chat.completions.create({
+//         model: "gpt-3.5-turbo",
+//         messages: [{"role": "user", "content": "Hello!"}],
+//     });
+//     createContent_left(chatCompletion.choices[0].message.content);
+//     console.log(chatCompletion.choices[0].message.content);
+// }
+// async function chat() {
+//   console.log('chat');
+//   try {
+//     const messageList = [{
+//         role: 'admin',
+//         content: 'you are a teacher'
+//     },
+//     {
+//         role: 'user',
+//         content: 'who are you'
+//     }
+//     ]
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json;charset=utf-8",
+//         Authorization: "Bearer " + apiKey,
+//       },
+//       body: JSON.stringify({
+//         model: "gpt-3.5-turbo",
+//         messages: messageList,
+//       }),
+//     });
+
+
+//     const data = await result.json();
+//     console.log('data');
+//     return data;
+//   } catch (err) {
+//     console.log(err);
+//     throw err;
+//   }
+  
+// }
+import OpenAI from 'openai';
+const openai = new OpenAI({
+ apiKey: ,
+ baseURL: ,
+ //gate way
+//  baseURL: '/api/v1/chat/completions',
+//  defaultHeaders: createHeaders({
+//     provider: "openai",
+//     apiKey: "PORTKEY_API_KEY" // defaults to process.env["PORTKEY_API_KEY"]
+//   })
+});
+async function gpt() {
+    console.log('send');
+    const chatCompletion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [{ role: "user", content: "What is a neuron?" }],
+    max_tokens: 100,
+  });
+  const response = chatCompletion.choices[0].message;
+  console.log(response);
+}
+
+
+
 </script>
 
 <style scoped>
