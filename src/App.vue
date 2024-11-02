@@ -70,8 +70,8 @@ const createContent_left = (massage: string) => {
 };
 import OpenAI from 'openai';
 const openai = new OpenAI({
- apiKey: 
- baseURL: 
+ apiKey: ,
+ baseURL: ,
  dangerouslyAllowBrowser: true,
 
 });

@@ -33,17 +33,9 @@ export default class MyPlugin extends Plugin {
         this.addRibbonIcon('dice', 'Open my view', (evt) => {
             this.activateView()
         })
-        this.registerEvent(this.app.workspace.on('click', (event: MouseEvent) => {
-            if (event.button === 2) { // 右键点击
-                this.onImageContextMenu(event);
-            }
-        }));
-        this.addRibbonIcon('dice', 'Print leaf types', () => {
-            this.app.workspace.iterateAllLeaves((leaf) => {
-              console.log(leaf.getViewState().type);
-            });
-           
-          })
+        
+  
+        
 
     }
     onImageContextMenu(event: MouseEvent): void {
@@ -94,14 +86,19 @@ export default class MyPlugin extends Plugin {
         this.app.workspace.revealLeaf(
             this.app.workspace.getLeavesOfType(VIEW_TYPE)[0]
         )
-        const view = this.app.workspace.getActiveViewOfType(MarkdownView);
-        console(view);
-        // Make sure the user is editing a Markdown file.
-        if (view) {
-            
-
-            console.log(view);
+        let cMenu = createEl("div");
+        if (cMenu) {
+          cMenu.setAttribute(
+            "style",
+            `left: calc(50% - calc(50px / 2)); bottom: 
+              30px; `
+          );
         }
+        cMenu.setAttribute("id", "searchModal");
+        document.body
+            .querySelector(".mod-vertical.mod-root")
+            .insertAdjacentElement("afterbegin", cMenu)
+
     }
     
     // async changeEditor(){
