@@ -90,8 +90,19 @@ export default class MyPlugin extends Plugin {
         if (cMenu) {
           cMenu.setAttribute(
             "style",
-            `left: calc(50% - calc(50px / 2)); bottom: 
-              30px; `
+            `width: 100px;
+    height: 50px;
+    padding: 3px;
+    display: grid;
+    user-select: none;
+    border-radius: 6px;
+    position: absolute;top : 50px;
+    transition: 200ms ease;
+    min-width: fit-content;
+    justify-content: space-around;
+    z-index: 15;
+    box-shadow: 0px 3px 32px rgb(31 38 135 / 15%);
+    border: 1px solid var(--background-modifier-border);`
           );
         }
         cMenu.setAttribute("id", "searchModal");
