@@ -21,10 +21,8 @@ const sendTextMessage = () => {
         return;
     }
     createContent(text.value);
-    createContent_left(text.value);
-    gpt();
-    // 在这里添加WebSocket发送消息的逻辑
-    text.value = ""; // 清空输入框
+    gpt(text.value);
+    text.value = ""; 
 };
 
 const createContent = (massage: string) => {
@@ -70,72 +68,24 @@ const createContent_left = (massage: string) => {
     },0)
     
 };
-// async function gpt() {
-//     const chatCompletion = await openai.chat.completions.create({
-//         model: "gpt-3.5-turbo",
-//         messages: [{"role": "user", "content": "Hello!"}],
-//     });
-//     createContent_left(chatCompletion.choices[0].message.content);
-//     console.log(chatCompletion.choices[0].message.content);
-// }
-// async function chat() {
-//   console.log('chat');
-//   try {
-//     const messageList = [{
-//         role: 'admin',
-//         content: 'you are a teacher'
-//     },
-//     {
-//         role: 'user',
-//         content: 'who are you'
-//     }
-//     ]
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json;charset=utf-8",
-//         Authorization: "Bearer " + apiKey,
-//       },
-//       body: JSON.stringify({
-//         model: "gpt-3.5-turbo",
-//         messages: messageList,
-//       }),
-//     });
-
-
-//     const data = await result.json();
-//     console.log('data');
-//     return data;
-//   } catch (err) {
-//     console.log(err);
-//     throw err;
-//   }
-  
-// }
 import OpenAI from 'openai';
 const openai = new OpenAI({
- apiKey: ,
- baseURL: ,
-dangerouslyAllowBrowser: true,
- //gate way
-//  baseURL: '/api/v1/chat/completions',
-//  defaultHeaders: createHeaders({
-//     provider: "openai",
-//     apiKey: "PORTKEY_API_KEY" // defaults to process.env["PORTKEY_API_KEY"]
-//   })
+ apiKey: 
+ baseURL: 
+ dangerouslyAllowBrowser: true,
+
 });
-async function gpt() {
+async function gpt(message: string) {
     console.log('send');
     const chatCompletion = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
-    messages: [{ role: "user", content: "What is a neuron?" }],
+    messages: [{ role: "user", content: message }],
     max_tokens: 100,
   });
   const response = chatCompletion.choices[0].message;
+  createContent_left(response.content);
   console.log(response);
 }
-
-
-
 </script>
 
 <style scoped>

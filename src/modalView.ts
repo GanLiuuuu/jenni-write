@@ -1,16 +1,16 @@
 import { ItemView, WorkspaceLeaf } from 'obsidian';
 import { createApp, App as VueApp } from 'vue';
-import App from './App.vue';
+import App from './Modal.vue';
 
-export const VIEW_TYPE: string = 'my-view';
+export const MODAL_VIEW_TYPE: string = 'modal-view';
 
-export class MyView extends ItemView {
+export class ModalView extends ItemView {
     vueapp: VueApp;
     constructor(leaf: WorkspaceLeaf) {
         super(leaf);
     }
     getViewType(): string {
-        return VIEW_TYPE;
+        return MODAL_VIEW_TYPE;
     }
     getDisplayText(): string {
         return "Vue Stater";
