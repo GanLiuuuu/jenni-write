@@ -5,7 +5,8 @@ import {
     Plugin,
     Menu,
     PluginSettingTab,
-    Setting
+    Setting,
+    Editor
 } from 'obsidian';
 
 import { MyView, VIEW_TYPE } from './view'
@@ -32,6 +33,10 @@ export default class MyPlugin extends Plugin {
 
         this.addRibbonIcon('dice', 'Open my view', (evt) => {
             this.activateView()
+        })
+        this.addRibbonIcon('dice', 'test', (evt) => {
+             // @ts-ignore
+            this.test(this.app.workspace.activeLeaf.view.editor);
         })
         
   
@@ -86,7 +91,16 @@ export default class MyPlugin extends Plugin {
         this.app.workspace.revealLeaf(
             this.app.workspace.getLeavesOfType(VIEW_TYPE)[0]
         )
+        
+    
+    }
+    async test(editor: Editor) {
         let cMenu = createEl("div");
+         // @ts-ignore
+        
+        // @ts-ignore
+        const cursorCoords = editor.cm.coordsAtPos(editor.posToOffset(editor.getCursor()));
+        
         if (cMenu) {
           cMenu.setAttribute(
             "style",
@@ -96,7 +110,8 @@ export default class MyPlugin extends Plugin {
     display: grid;
     user-select: none;
     border-radius: 6px;
-    position: absolute;top : 50px;
+    position: absolute;        top: ${cursorCoords.top}px; /* 使用光标的顶部坐标 */
+        left: ${cursorCoords.left-276}px; /* 使用光标的左侧坐标 */
     transition: 200ms ease;
     min-width: fit-content;
     justify-content: space-around;
@@ -111,7 +126,6 @@ export default class MyPlugin extends Plugin {
             .insertAdjacentElement("afterbegin", cMenu)
 
     }
-    
     // async changeEditor(){
     //     let v = this.app.workspace.getActiveViewOfType(MarkdownView);
     //     if (!v) {
