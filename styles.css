@@ -1,5 +1,18 @@
 /* src/stalin.css */
 /* main.css */
+.suggestions-list {
+  border: 1px solid #ccc;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.suggestions-list li {
+  padding: 8px;
+  cursor: pointer;
+}
+.suggestions-list li:hover {
+  background-color: #f0f0f0;
+}
 .chat-area[data-v-ea994a51] {
   height: 100%;
   text-align: center;

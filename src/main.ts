@@ -14,6 +14,7 @@ import M from './Modal.vue';
 import { MyView, VIEW_TYPE } from './view'
 
 
+
 interface MyPluginSettings {
     mySetting: string;
 }
@@ -38,7 +39,7 @@ export default class MyPlugin extends Plugin {
         })
         this.addRibbonIcon('dice', 'test', (evt) => {
              // @ts-ignore
-            this.test(this.app.workspace.activeLeaf.view.editor);
+            this.createModal(this.app.workspace.activeLeaf.view.editor);
         })
         
   
@@ -69,70 +70,37 @@ export default class MyPlugin extends Plugin {
         
     
     }
-    //todo: refractor
-    async test(editor: Editor) {
-        const cMenu = createEl("div");
+    async createModal(editor: Editor) {
         //@ts-ignore
         console.log(this.app.workspace.activeLeaf.view.editor.containerEl.children[1]);
         // @ts-ignore
         const container = this.app.workspace.activeLeaf.view.editor.containerEl.children[1];
         //mount vue app to the container
-        let content = container.createEl("div", {
+        const content = container.createEl("div", {
             cls: "search-modal"
         });
         // @ts-ignore
         const cursorCoords = editor.cm.coordsAtPos(editor.posToOffset(editor.getCursor()));
 
         content.setAttribute("style",
-            `width: 100px;
-    height: 50px;
-    padding: 3px;
-    display: grid;
-    user-select: none;
-    border-radius: 6px;
-    position: absolute;        top: ${cursorCoords.top}px; /* 使用光标的顶部坐标 */
-        left: ${cursorCoords.left-276}px; /* 使用光标的左侧坐标 */
-    transition: 200ms ease;
-    min-width: fit-content;
-    justify-content: space-around;
-    z-index: 15;
-    box-shadow: 0px 3px 32px rgb(31 38 135 / 15%);
-    border: 1px solid var(--background-modifier-border);`
+            `width: 200px;
+            height: 100px;
+            padding: 3px;
+            display: grid;
+            user-select: none;
+            border-radius: 6px;
+            position: absolute;        
+            top: ${cursorCoords.top}px; 
+            left: ${cursorCoords.left-276}px; 
+            transition: 200ms ease;
+            min-width: fit-content;
+            justify-content: space-around;
+            z-index: 15;
+            box-shadow: 0px 3px 32px rgb(31 38 135 / 15%);
+            border: 1px solid var(--background-modifier-border);`
           )
         this.vueapp = createApp(M);
         this.vueapp.mount(content);
-         // @ts-ignore
-        
-        // @ts-ignore
-        // const cursorCoords = editor.cm.coordsAtPos(editor.posToOffset(editor.getCursor()));
-
-        
-    //     if (cMenu) {
-    //       cMenu.setAttribute(
-    //         "style",
-    //         `width: 100px;
-    // height: 50px;
-    // padding: 3px;
-    // display: grid;
-    // user-select: none;
-    // border-radius: 6px;
-    // position: absolute;        top: ${cursorCoords.top}px; /* 使用光标的顶部坐标 */
-    //     left: ${cursorCoords.left-276}px; /* 使用光标的左侧坐标 */
-    // transition: 200ms ease;
-    // min-width: fit-content;
-    // justify-content: space-around;
-    // z-index: 15;
-    // box-shadow: 0px 3px 32px rgb(31 38 135 / 15%);
-    // border: 1px solid var(--background-modifier-border);`
-    //       );
-    //     }
-    //     cMenu.setAttribute("id", "searchModal");
-    //     document.body
-    //         .querySelector(".mod-vertical.mod-root")
-    //         .insertAdjacentElement("afterbegin", cMenu)
-        // const vueInstance = new Vue({
-        //     render: h => h(MyComponent)
-        // }).$mount(cMenu); // 将 Vue 组件挂载到 cMenu
 
     }
 
