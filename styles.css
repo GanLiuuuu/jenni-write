@@ -7,11 +7,22 @@
   margin: 0;
 }
 .suggestions-list li {
-  padding: 8px;
+  padding: 12px;
+  min-height: 50px;
   cursor: pointer;
+  line-height: 1.5;
 }
 .suggestions-list li:hover {
   background-color: #f0f0f0;
+}
+.suggestion-title {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+.suggestion-abstract {
+  font-size: 0.9em;
+  color: #c71b1b;
+  margin-top: 4px;
 }
 .chat-area[data-v-ea994a51] {
   height: 100%;
