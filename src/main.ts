@@ -10,8 +10,11 @@ import {
 } from 'obsidian';
 import { createApp, App as VueApp } from 'vue';
 import M from './Modal.vue';
+import { createPinia } from 'pinia';
 
 import { MyView, VIEW_TYPE } from './view'
+import { useEventStore } from './eventStore'; // 导入 Pinia Store
+import { useStringStore } from './useStringStore';
 
 
 
@@ -71,8 +74,6 @@ export default class MyPlugin extends Plugin {
     
     }
     async createModal(editor: Editor) {
-        //@ts-ignore
-        console.log(this.app.workspace.activeLeaf.view.editor.containerEl.children[1]);
         // @ts-ignore
         const container = this.app.workspace.activeLeaf.view.editor.containerEl.children[1];
         //mount vue app to the container
@@ -81,6 +82,17 @@ export default class MyPlugin extends Plugin {
         });
         // @ts-ignore
         const cursorCoords = editor.cm.coordsAtPos(editor.posToOffset(editor.getCursor()));
+        const fileContent = editor.getValue();
+
+        // 检查是否存在 '## Reference' 部分
+        if (!fileContent.includes("## Reference")) {
+            // 如果没有，自动在文件末尾添加 '## Reference'
+            const cursor = editor.getCursor();
+            const lineCount = editor.lineCount();
+
+            // 在文件最后插入 '## Reference' 部分
+            editor.replaceRange("\n## Reference\n", { line: lineCount, ch: 0 });
+        }
 
         content.setAttribute("style",
             `width: 200px;
@@ -88,7 +100,6 @@ export default class MyPlugin extends Plugin {
             padding: 3px;
             display: grid;
             user-select: none;
-            border-radius: 6px;
             position: absolute;        
             top: ${cursorCoords.top}px; 
             left: ${cursorCoords.left-276}px; 
@@ -96,11 +107,36 @@ export default class MyPlugin extends Plugin {
             min-width: fit-content;
             justify-content: space-around;
             z-index: 15;
-            box-shadow: 0px 3px 32px rgb(31 38 135 / 15%);
-            border: 1px solid var(--background-modifier-border);`
-          )
+            `
+        )
         this.vueapp = createApp(M);
+        this.vueapp.use(createPinia());
+        const eventStore = useEventStore();
+        const stringStore = useStringStore();
         this.vueapp.mount(content);
+        eventStore.$subscribe(() => {
+            console.log('Receiver has received the signal!'); 
+            editor.replaceRange(
+                `[${stringStore.stringOne}](##Reference)`,
+                editor.getCursor()
+            );
+            editor.replaceRange(
+                stringStore.stringTwo,
+                {line: editor.lineCount()-1, ch: 0}
+              );       
+        });
+    const handleClickOutside = (event: MouseEvent) => {
+        if (!content.contains(event.target as Node)) {
+            console.log('clicked outside of content');
+            this.vueapp.unmount();
+            content.remove();
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+    };
+    
+
+    // 监听文档的点击事件
+    document.addEventListener("mousedown", handleClickOutside);
 
     }
 

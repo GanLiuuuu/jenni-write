@@ -8,8 +8,10 @@
     </div>
 </template>
 <script setup lang="tsx">
+
 import { ref, nextTick } from 'vue';
 import{setIcon} from 'obsidian';
+
 const text = ref('');
 const content = ref('');
 nextTick(() => {
@@ -70,8 +72,6 @@ const createContent_left = (massage: string) => {
 };
 import OpenAI from 'openai';
 const openai = new OpenAI({
- apiKey: ,
- baseURL: ,
  dangerouslyAllowBrowser: true,
 
 });
@@ -121,7 +121,6 @@ button {
     border: none;
     width:40px;
     border-radius: 4px;
-    background-color: #4ade80; /* 修改按钮背景色 */
     color: white;
     cursor: pointer;
 }
@@ -136,6 +135,5 @@ textarea {
 }
 
 button:hover {
-    background-color: #22c55e; /* 修改按钮悬停颜色 */
 }
 </style>

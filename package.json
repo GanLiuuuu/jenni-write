@@ -17,6 +17,7 @@
 		"jquery": "^3.7.1",
 		"jquery-typeahead": "^2.11.1",
 		"openai": "^4.69.0",
+		"pinia": "^2.2.6",
 		"vue": "^3.2.31"
 	},
 	"devDependencies": {

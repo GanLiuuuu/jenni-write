@@ -1,6 +1,10 @@
 /* src/stalin.css */
 /* main.css */
 .suggestions-list {
+  max-height: 250px;
+  max-width: 600px;
+  overflow-y: auto;
+  background-color: #f8f8f8;
   border: 1px solid #ccc;
   list-style-type: none;
   padding: 0;
@@ -15,14 +19,65 @@
 .suggestions-list li:hover {
   background-color: #f0f0f0;
 }
+.suggestion-item {
+  display: block;
+  padding: 12px;
+  cursor: pointer;
+  line-height: 1.5;
+  border-bottom: 1px solid #eee;
+  background-color: #ffffff;
+}
 .suggestion-title {
   font-weight: bold;
-  font-size: 1.1em;
+  margin-bottom: 5px;
+}
+.suggestion-author {
+  color: gray;
+  font-size: 0.9em;
+  margin-bottom: 5px;
 }
 .suggestion-abstract {
-  font-size: 0.9em;
-  color: #c71b1b;
-  margin-top: 4px;
+  display: flex;
+  align-items: center;
+}
+.abstract-line {
+  width: 4px;
+  height: 20px;
+  background-color: #ccc;
+  margin-right: 8px;
+}
+.suggestion-abstract span {
+  font-size: 0.85em;
+}
+.suggestion-buttons {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.suggestion-button {
+  margin-left: 5px;
+  padding: 6px 12px;
+  background-color: #ccc;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.js-typeahead {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  color: #333;
+  background-color: #fff;
+  transition: border-color 0.3s;
+}
+.js-typeahead:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 .chat-area[data-v-ea994a51] {
   height: 100%;
@@ -56,7 +111,6 @@ button[data-v-ea994a51] {
   border: none;
   width: 40px;
   border-radius: 4px;
-  background-color: #4ade80;
   color: white;
   cursor: pointer;
 }
@@ -70,7 +124,6 @@ textarea[data-v-ea994a51] {
   outline: none;
 }
 button[data-v-ea994a51]:hover {
-  background-color: #22c55e;
 }
 
 /* src/main.css */
