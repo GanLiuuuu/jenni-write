@@ -40,14 +40,26 @@ export default class MyPlugin extends Plugin {
         this.addRibbonIcon('dice', 'Open my view', (evt) => {
             this.activateView()
         })
-        this.addRibbonIcon('dice', 'test', (evt) => {
-             // @ts-ignore
-            this.createModal(this.app.workspace.activeLeaf.view.editor);
-        })
+        
+        
+        this.registerEvent(
+            // @ts-ignore
+            this.app.workspace.on('editor-change', ()=>{
+                // @ts-ignore
+                this.handleEditorChange(this.app.workspace.activeLeaf.view.editor);
+            })
+          );
         
   
     }
-
+    handleEditorChange(editor: Editor) {
+        const cursor = editor.getCursor(); 
+        const lineText = editor.getLine(cursor.line);
+        if (lineText.includes('@')) {
+            this.createModal(editor);
+        }
+    }
+ 
     onunload() {
         this.app.workspace.detachLeavesOfType(VIEW_TYPE)
     }
@@ -74,8 +86,9 @@ export default class MyPlugin extends Plugin {
     
     }
     async createModal(editor: Editor) {
+        //TODO: 检查整个插件是否会存在空值报错
         // @ts-ignore
-        const container = this.app.workspace.activeLeaf.view.editor.containerEl.children[1];
+        const container = editor.containerEl.children[1];
         //mount vue app to the container
         const content = container.createEl("div", {
             cls: "search-modal"
@@ -83,17 +96,10 @@ export default class MyPlugin extends Plugin {
         // @ts-ignore
         const cursorCoords = editor.cm.coordsAtPos(editor.posToOffset(editor.getCursor()));
         const fileContent = editor.getValue();
-
-        // 检查是否存在 '## Reference' 部分
         if (!fileContent.includes("## Reference")) {
-            // 如果没有，自动在文件末尾添加 '## Reference'
-            const cursor = editor.getCursor();
             const lineCount = editor.lineCount();
-
-            // 在文件最后插入 '## Reference' 部分
             editor.replaceRange("\n## Reference\n", { line: lineCount, ch: 0 });
         }
-
         content.setAttribute("style",
             `width: 200px;
             height: 100px;
@@ -102,7 +108,7 @@ export default class MyPlugin extends Plugin {
             user-select: none;
             position: absolute;        
             top: ${cursorCoords.top}px; 
-            left: ${cursorCoords.left-276}px; 
+            left: ${cursorCoords.left}px; 
             transition: 200ms ease;
             min-width: fit-content;
             justify-content: space-around;
@@ -116,6 +122,8 @@ export default class MyPlugin extends Plugin {
         this.vueapp.mount(content);
         eventStore.$subscribe(() => {
             console.log('Receiver has received the signal!'); 
+            const cursor = editor.getCursor();
+            editor.replaceRange('', { line: cursor.line, ch: cursor.ch-1 }, { line: cursor.line, ch: cursor.ch  });
             editor.replaceRange(
                 `[${stringStore.stringOne}](##Reference)`,
                 editor.getCursor()
@@ -123,7 +131,10 @@ export default class MyPlugin extends Plugin {
             editor.replaceRange(
                 stringStore.stringTwo,
                 {line: editor.lineCount()-1, ch: 0}
-              );       
+            );
+            this.vueapp.unmount();
+            content.remove();
+            document.removeEventListener("mousedown", handleClickOutside);       
         });
     const handleClickOutside = (event: MouseEvent) => {
         if (!content.contains(event.target as Node)) {
@@ -134,7 +145,6 @@ export default class MyPlugin extends Plugin {
         }
     };
     
-
     // 监听文档的点击事件
     document.addEventListener("mousedown", handleClickOutside);
 

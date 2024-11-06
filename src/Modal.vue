@@ -28,6 +28,7 @@
 </template>
   
   <script setup lang="tsx">
+  //TODO: 处理一下人名过多过长的问题
   import { ref } from 'vue';
   import axios from 'axios';
   const inputRef = ref<HTMLInputElement | null>(null);

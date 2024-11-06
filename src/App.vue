@@ -8,7 +8,7 @@
     </div>
 </template>
 <script setup lang="tsx">
-
+//TODO: better UI(clip board)
 import { ref, nextTick } from 'vue';
 import{setIcon} from 'obsidian';
 
