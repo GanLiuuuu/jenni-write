@@ -25,6 +25,7 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "**/*.vue"
+    "**/*.vue",
+    "global.d.ts" 
   ],
 }

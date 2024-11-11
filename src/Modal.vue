@@ -42,10 +42,17 @@
   const stringStore = useStringStore();
 
   function onInputChange() {
+    // 清除上一个定时器
     clearTimeout(debounceTimer);
+
+    if (query.value.length < 2) {
+        suggestions.value = [];
+        return;
+    }
+
     debounceTimer = setTimeout(() => {
       searchPapers();
-    }, 0);
+    }, 300); // 延迟300ms
   }
 
   function truncateAbstract(abstract: any) {
@@ -53,11 +60,13 @@
         return abstract.length > 200 ? abstract.substring(0, 200) + '...' : abstract;
     }
   const searchPapers = async () => {
+  //FIXME: it keeps refreshing 
     const url = `https://api.semanticscholar.org/graph/v1/paper/search`;
     
     try {
       const response = await axios.get(url, {
         headers: {
+          "x-api-key": "",
         },
         params: {
           query: query.value,
@@ -79,8 +88,6 @@
         abstract: paper.abstract,
         citation: paper.citationStyles.bibtex
       }));
-
-
     } catch (error) {
       if (error.response && error.response.status === 429) {
         console.error('Too many requests, please wait.');

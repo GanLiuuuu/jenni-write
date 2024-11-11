@@ -19,28 +19,41 @@ import { useStringStore } from './useStringStore';
 
 
 interface MyPluginSettings {
-    mySetting: string;
+    myKey: string;
 }
 
 const DEFAULT_SETTINGS: MyPluginSettings = {
-    mySetting: 'default'
-}
+    myKey: '',
+};
 
 export default class MyPlugin extends Plugin {
     settings: MyPluginSettings;
     vueapp: VueApp;
     async onload() {
         await this.loadSettings();
+        window.myPluginApiKey = this.settings.myKey;  
+        this.addSettingTab(new MyPluginSettingTab(this.app, this));
 
         this.registerView(
             VIEW_TYPE,
             (leaf) => new MyView(leaf)
         )
+        this.addCommand({
+            id: 'better-toggle-todo',
+            name: 'Toggle to-do lists',
+            //@ts-ignore
+            callback: () => this.createModal(this.app.workspace.activeLeaf.view.editor),
+            hotkeys: [
+              {
+                modifiers: ['Mod','Shift'],
+                key: 'i',
+              },
+            ],
+          });
 
-        this.addRibbonIcon('dice', 'Open my view', (evt) => {
+        this.addRibbonIcon('message-square', 'Jenni chat', (evt) => {
             this.activateView()
         })
-        
         
         this.registerEvent(
             // @ts-ignore
@@ -144,12 +157,47 @@ export default class MyPlugin extends Plugin {
             document.removeEventListener("mousedown", handleClickOutside);
         }
     };
-    
-    // 监听文档的点击事件
     document.addEventListener("mousedown", handleClickOutside);
 
     }
 
 }
 
+class MyPluginSettingTab extends PluginSettingTab {
+    plugin: MyPlugin;
 
+    constructor(app: App, plugin: MyPlugin) {
+        super(app, plugin);
+        this.plugin = plugin;
+    }
+    display(): void {
+        const { containerEl } = this;
+
+        containerEl.empty();
+
+        containerEl.createEl('h1', { text: 'API Setting' });
+        
+        new Setting(containerEl)
+            .setName('OpenAI API Key')
+            .setDesc('Enter your OpenAI API key here.')
+            .addText(text => 
+                text
+                    .setValue(this.plugin.settings.myKey)
+                    .onChange(async (value) => {
+                        this.plugin.settings.myKey = value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+            const link = containerEl.createEl('a', {
+                text: 'You can find your API key at here.',
+                href: 'https://platform.openai.com/api-keys'
+            });
+    
+            // 设置链接在新标签页中打开
+            link.setAttribute('target', '_blank');
+            containerEl.createEl('h1', { text: 'Custom Hotkey Settings' });
+
+            
+    }
+
+}

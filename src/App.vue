@@ -34,7 +34,7 @@ const createContent = (massage: string) => {
                 <div class="chat-message" style="flex: 1; text-align: right; padding-right: 10px; max-width: 90%; ">
                     <div class="tip left" style="background-color: #f0f0f0; padding: 10px; border-radius: 8px; display: inline-block; max-width: 70%; word-wrap:break-word; overflow-wrap: break-word; color: black;">
                         ${massage}
-                    </div>
+                    </div> 
                 </div>
                 <div class="chat-avatar" style="width: 30px; height: 30px; ">
                     <img src="https://eu.ui-avatars.com/api/?name=John+Noe&size=250" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
@@ -71,7 +71,14 @@ const createContent_left = (massage: string) => {
     
 };
 import OpenAI from 'openai';
+import { Notice } from 'obsidian';
+const apiKey = window.myPluginApiKey;
+if (!apiKey) {
+    new Notice("API Key is missing. Please configure it in the plugin settings.");
+}
 const openai = new OpenAI({
+ apiKey: apiKey,
+ baseURL: "",
  dangerouslyAllowBrowser: true,
 
 });
