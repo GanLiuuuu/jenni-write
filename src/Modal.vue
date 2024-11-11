@@ -29,7 +29,7 @@
   
   <script setup lang="tsx">
   //TODO: 处理一下人名过多过长的问题
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import axios from 'axios';
   const inputRef = ref<HTMLInputElement | null>(null);
   const query = ref<string>('');
@@ -40,7 +40,9 @@
 
   const eventStore = useEventStore();
   const stringStore = useStringStore();
-
+  onMounted(() => {
+    inputRef.value?.focus();
+  });
   function onInputChange() {
     // 清除上一个定时器
     clearTimeout(debounceTimer);
@@ -66,7 +68,7 @@
     try {
       const response = await axios.get(url, {
         headers: {
-          "x-api-key": "",
+          "x-api-key": ,
         },
         params: {
           query: query.value,

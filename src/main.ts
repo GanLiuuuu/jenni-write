@@ -39,8 +39,8 @@ export default class MyPlugin extends Plugin {
             (leaf) => new MyView(leaf)
         )
         this.addCommand({
-            id: 'better-toggle-todo',
-            name: 'Toggle to-do lists',
+            id: 'search-paper',
+            name: 'search paper',
             //@ts-ignore
             callback: () => this.createModal(this.app.workspace.activeLeaf.view.editor),
             hotkeys: [
@@ -120,7 +120,7 @@ export default class MyPlugin extends Plugin {
             display: grid;
             user-select: none;
             position: absolute;        
-            top: ${cursorCoords.top}px; 
+            top: ${cursorCoords.top -30 }px; 
             left: ${cursorCoords.left}px; 
             transition: 200ms ease;
             min-width: fit-content;

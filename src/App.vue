@@ -1,6 +1,16 @@
 <template>
     <div class="chat-area">
-        <div class="history" v-html="content" id="history"></div>
+        <div class="history" id="history">
+    <div v-for="(msg, index) in messages" :key="index" class="chat-row" style="display: flex; align-items: center; justify-content: space-between; padding: 5px 0;">
+        <div class="chat-message" :style="{'text-align': msg.role === 'user' ? 'right' : 'left', 'padding-left': msg.role === 'user' ? '10px' : '0px', 'padding-right': msg.role === 'user' ? '0px' : '10px'}">
+            <div class="tip" style="background-color: #f0f0f0; padding: 10px; border-radius: 8px; display: inline-block; max-width: 70%; word-wrap: break-word; overflow-wrap: break-word; color: black;">
+                {{ msg.message }}
+            </div> 
+        </div>
+        
+    </div>
+</div>
+
         <div class="input-area">
             <textarea placeholder="Ask Jenni" v-model="text"></textarea>
             <button id="user" @click="sendTextMessage"></button>
@@ -14,6 +24,8 @@ import{setIcon} from 'obsidian';
 
 const text = ref('');
 const content = ref('');
+const currentMessageId = ref(0); // 用于跟踪当前消息的 ID
+
 nextTick(() => {
     const buttonElement = document.getElementById("user");
     setIcon(buttonElement, 'send', 30);
@@ -22,10 +34,17 @@ const sendTextMessage = () => {
     if (!text.value) {
         return;
     }
-    createContent(text.value);
-    gpt(text.value);
-    text.value = ""; 
+    //TODO: deal with network error situation
+    createContent1(text.value, 'user', () => {
+        createContent2("", 'bot', () => {
+            gpt2(text.value);  
+            text.value = "";
+        });
+    });
+
+     
 };
+
 
 const createContent = (massage: string) => {
     let html = "";
@@ -47,9 +66,29 @@ const createContent = (massage: string) => {
         scrollableWindow.scrollTop = scrollableWindow.scrollHeight;
     },0)
 };
+const createContent1 = (message: string, role: string, callback?: (message1:string) => void) => {
+    messages.value.push({ message, role });  // 将新的消息添加到数组中
+
+    // 调用滚动到底部
+    const scrollableWindow = document.getElementById('history');
+    setTimeout(() => {
+        scrollableWindow.scrollTop = scrollableWindow.scrollHeight; // 滚动到最新消息
+        if (callback) callback(message);
+    }, 0);
+};
+const createContent2 = (message: string, role: string, callback?: () => void) => {
+    messages.value.push({ message, role });  // 将新的消息添加到数组中
+
+    // 调用滚动到底部
+    const scrollableWindow = document.getElementById('history');
+    setTimeout(() => {
+        scrollableWindow.scrollTop = scrollableWindow.scrollHeight; // 滚动到最新消息
+        if (callback) callback();
+    }, 0);
+};
+
 const createContent_left = (massage: string) => {
     let html1 = "";
- 
         html1 = `
         <div class="chat-row" style="display: flex; align-items: center; justify-content: space-between; padding: 5px 0;">
             <div class="chat-avatar" style="width: 30px; height: 30px; ">
@@ -73,12 +112,14 @@ const createContent_left = (massage: string) => {
 import OpenAI from 'openai';
 import { Notice } from 'obsidian';
 const apiKey = window.myPluginApiKey;
+const messages = ref<Array<{ message: string, role: string }>>([]); // 存储聊天记录的数组
+
 if (!apiKey) {
     new Notice("API Key is missing. Please configure it in the plugin settings.");
 }
 const openai = new OpenAI({
  apiKey: apiKey,
- baseURL: "",
+ baseURL:
  dangerouslyAllowBrowser: true,
 
 });
@@ -88,11 +129,64 @@ async function gpt(message: string) {
     model: "gpt-3.5-turbo",
     messages: [{ role: "user", content: message }],
     max_tokens: 100,
+    stream: true
   });
-  const response = chatCompletion.choices[0].message;
-  createContent_left(response.content);
-  console.log(response);
+//   const response = chatCompletion.choices[0].message;
+//   createContent_left(response.content);
+//   console.log(response);
+let responseContent = '';
+    for await (const part of chatCompletion) {
+        responseContent += part.choices[0].delta.content; // 逐步接收内容
+        createContent_left(responseContent); // 更新内容
+    }
 }
+async function gpt1(message: string) {
+    console.log('send');
+    
+    const chatCompletion = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: message }],
+        max_tokens: 100,
+        stream: true, // 启用流式输出
+    });
+
+    let responseContent = '';
+    for await (const part of chatCompletion) {
+        responseContent += part.choices[0].delta.content; // 逐步接收内容
+        updateContent(responseContent); // 更新内容
+        console.log(responseContent);
+    }
+
+}
+async function gpt2(message: string) {
+    console.log('send');
+    
+    const chatCompletion = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: message }],
+        max_tokens: 100,
+        stream: true, // 启用流式输出
+    });
+
+    let responseContent = '';
+    for await (const part of chatCompletion) {
+        if(part.choices[0].delta.content){
+            responseContent += part.choices[0].delta.content; // 逐步接收内容
+        updateContent(responseContent); // 更新内容
+        console.log(responseContent);
+        }
+        
+    }
+
+}
+const updateContent = (newContent: string) => {
+    // 查找并更新最后一条消息
+    const lastMessageIndex = messages.value.length - 1;
+    if (lastMessageIndex >= 0) {
+        messages.value[lastMessageIndex].message = newContent;  // 更新最后一条消息的内容
+    }
+};
+
 </script>
 
 <style scoped>
