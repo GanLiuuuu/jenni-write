@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
-	"version": "1.0.1",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"name": "obsidian-jenni-write",
+	"version": "0.0.1",
+	"description": "This Obsidian plugin streamlines research and writing by allowing users to quickly search for and add academic references with a keyboard shortcut. It supports automatic APA-style citations and includes a ChatGPT-powered assistant, Jenni, for writing assistance. The plugin is free to use and enhances productivity in academic work.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",

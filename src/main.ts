@@ -185,8 +185,6 @@ class MyPluginSettingTab extends PluginSettingTab {
     
             // 设置链接在新标签页中打开
             link.setAttribute('target', '_blank');
-            containerEl.createEl('h1', { text: 'Custom Hotkey Settings' });
-
             
     }
 
