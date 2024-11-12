@@ -1,24 +1,40 @@
-## Develop your own plugins with Vue3
+# Obsidian Plugin for Research & Writing Enhancement
 
+This powerful Obsidian plugin is designed to streamline your research and writing workflow with features that improve citation management and writing assistance. With a user-friendly interface, it combines academic reference management with AI-driven support.
 
-## Init steps
+---
 
-1. Clone this repository to your `.obsidian\plugins` directory, and move into it.
+## Key Features
 
-2. Run `npm install` to install all the stuff you need, Including: 
-   + vue3 sfc support
-   + vue3 tsx support
-   + typescript
-   + esbuild
+### 1. **Quick Citation Search & Insertion**
+Easily search for academic articles and add them to your document with a simple keyboard shortcut. The plugin automatically formats in-text citations and generates references in APA style.
 
-3. Run `npm run dev` to compile code and generate a `main.js`, which is the final output. Your `main.js` will be updated simultaneously with the change of your source code files.
+![Citation Search Demo](./examples/1.gif)
 
-If above steps work, you can turn on 'Vue Template' plugin in Obsidian. Click the *dice* like button on the left ribbon, a new tab will open on the right and says *"Hello,Developer!"*.
+### 2. **ChatGPT-Powered Writing Assistant (Jenni)**
+Interact with Jenni, an AI-powered writing assistant that helps you improve your content and productivity. Powered by ChatGPT, Jenni offers writing suggestions, answers queries, and assists with research.
 
-4. When you get ready to build a release, run `npm run build` to create it. This will remove all codemaps and minify code size.
+![ChatGPT Assistant Demo](./examples/img1.png)
 
+---
 
+## Why Use This Plugin?
 
-## Notice
+- **Efficiency**: Quickly search and insert citations, saving you time on manual formatting.
+- **Accuracy**: Automated generation of APA-style citations ensures consistency and correctness.
+- **AI Support**: ChatGPT-powered Jenni provides writing assistance and interactive support.
+- **Free to Use**: Fully available at no cost.
 
-+ [hot-reload](https://forum.obsidian.md/t/plugin-release-for-developers-hot-reload-the-plugin-s-youre-developing/12185) plugin may be very helpful in your developing. It reloads the plugin whose `main.js` file changes, so you don't need do it yourself every time you make changes to code.
+---
+
+## Installation
+
+1. Download and install the plugin in Obsidian.
+2. Configure your OpenAI key in the setting tab.
+3. Start adding references and interacting with Jenni for a smoother writing experience.
+
+---
+
+## Get Started
+
+Start enhancing your research and writing today with the Obsidian plugin! Feel free to explore its features and experience how it can simplify your academic work.

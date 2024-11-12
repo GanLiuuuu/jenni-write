@@ -1,5 +1,6 @@
 import { ItemView, WorkspaceLeaf } from 'obsidian';
 import { createApp, App as VueApp } from 'vue';
+
 import App from './App.vue';
 
 export const VIEW_TYPE: string = 'my-view';
@@ -13,13 +14,14 @@ export class MyView extends ItemView {
         return VIEW_TYPE;
     }
     getDisplayText(): string {
-        return "Vue Stater";
+        return "Jenni Chat";
     }
     getIcon(): string {
-        return "dice";
+        return "message-square";
     }
     async onOpen() {
         const container = this.containerEl.children[1];
+
         container.empty();
         let content = container.createEl("div", {
             cls: "my-plugin-view"

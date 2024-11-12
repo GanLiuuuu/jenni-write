@@ -28,7 +28,6 @@
 </template>
   
   <script setup lang="tsx">
-  //TODO: 处理一下人名过多过长的问题
   import { onMounted, ref } from 'vue';
   import axios from 'axios';
   const inputRef = ref<HTMLInputElement | null>(null);
@@ -44,7 +43,6 @@
     inputRef.value?.focus();
   });
   function onInputChange() {
-    // 清除上一个定时器
     clearTimeout(debounceTimer);
 
     if (query.value.length < 2) {
@@ -54,7 +52,7 @@
 
     debounceTimer = setTimeout(() => {
       searchPapers();
-    }, 300); // 延迟300ms
+    }, 300); 
   }
 
   function truncateAbstract(abstract: any) {
@@ -62,13 +60,10 @@
         return abstract.length > 200 ? abstract.substring(0, 200) + '...' : abstract;
     }
   const searchPapers = async () => {
-  //FIXME: it keeps refreshing 
     const url = `https://api.semanticscholar.org/graph/v1/paper/search`;
-    
     try {
       const response = await axios.get(url, {
         headers: {
-          "x-api-key": ,
         },
         params: {
           query: query.value,
@@ -144,7 +139,7 @@ function formatAPA(bibtexStr: string): string {
     const parts = author.trim().split(" ");
     const lastName = parts[parts.length - 1];
     const firstInitial = parts.slice(0, parts.length - 1).map((part) => part.charAt(0).toUpperCase() + ".").join(" ");
-    return `${lastName}, ${firstInitial}`;
+    return `${lastName} ${firstInitial}`;
   }).join(", ");
   
   // APA 引用格式构建

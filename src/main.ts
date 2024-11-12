@@ -25,15 +25,14 @@ interface MyPluginSettings {
 const DEFAULT_SETTINGS: MyPluginSettings = {
     myKey: '',
 };
-
 export default class MyPlugin extends Plugin {
     settings: MyPluginSettings;
     vueapp: VueApp;
+    
     async onload() {
         await this.loadSettings();
         window.myPluginApiKey = this.settings.myKey;  
         this.addSettingTab(new MyPluginSettingTab(this.app, this));
-
         this.registerView(
             VIEW_TYPE,
             (leaf) => new MyView(leaf)
@@ -55,24 +54,12 @@ export default class MyPlugin extends Plugin {
             this.activateView()
         })
         
-        this.registerEvent(
-            // @ts-ignore
-            this.app.workspace.on('editor-change', ()=>{
-                // @ts-ignore
-                this.handleEditorChange(this.app.workspace.activeLeaf.view.editor);
-            })
-          );
+
+         
         
   
     }
-    handleEditorChange(editor: Editor) {
-        const cursor = editor.getCursor(); 
-        const lineText = editor.getLine(cursor.line);
-        if (lineText.includes('@')) {
-            this.createModal(editor);
-        }
-    }
- 
+
     onunload() {
         this.app.workspace.detachLeavesOfType(VIEW_TYPE)
     }
@@ -98,8 +85,12 @@ export default class MyPlugin extends Plugin {
         
     
     }
+
     async createModal(editor: Editor) {
-        //TODO: 检查整个插件是否会存在空值报错
+        if (!editor) {
+            console.warn('Editor is null or undefined. Exiting createModal.');
+            return; // 如果 editor 为空，直接返回
+        }
         // @ts-ignore
         const container = editor.containerEl.children[1];
         //mount vue app to the container
@@ -158,7 +149,6 @@ export default class MyPlugin extends Plugin {
         }
     };
     document.addEventListener("mousedown", handleClickOutside);
-
     }
 
 }
