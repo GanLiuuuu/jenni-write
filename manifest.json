@@ -3,7 +3,7 @@
 	"name": "Jenni Writer",
 	"version": "0.0.1",
 	"minAppVersion": "0.12.0",
-	"description": "This Obsidian plugin streamlines research and writing by allowing users to quickly search for and add academic references with a keyboard shortcut. It supports automatic APA-style citations and includes a ChatGPT-powered assistant, Jenni, for writing assistance. The plugin is free to use and enhances productivity in academic work.",
+	"description": "Write and cite using Jenni AI.",
 	"author": "KenLAU",
 	"authorUrl": "",
 	"isDesktopOnly": true
