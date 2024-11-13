@@ -18,21 +18,21 @@ import { useStringStore } from './useStringStore';
 
 
 
-interface MyPluginSettings {
+interface AISettings {
     myKey: string;
 }
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
+const DEFAULT_SETTINGS: AISettings = {
     myKey: '',
 };
-export default class MyPlugin extends Plugin {
-    settings: MyPluginSettings;
+export default class JenniPlugin extends Plugin {
+    settings: AISettings;
     vueapp: VueApp;
     
     async onload() {
         await this.loadSettings();
         window.myPluginApiKey = this.settings.myKey;  
-        this.addSettingTab(new MyPluginSettingTab(this.app, this));
+        this.addSettingTab(new AISettingTab(this.app, this));
         this.registerView(
             VIEW_TYPE,
             (leaf) => new MyView(leaf)
@@ -42,12 +42,12 @@ export default class MyPlugin extends Plugin {
             name: 'search paper',
             //@ts-ignore
             callback: () => this.createModal(this.app.workspace.activeLeaf.view.editor),
-            hotkeys: [
-              {
-                modifiers: ['Mod','Shift'],
-                key: 'i',
-              },
-            ],
+            // hotkeys: [
+            //   {
+            //     modifiers: ['Mod','Shift'],
+            //     key: 'i',
+            //   },
+            // ],
           });
 
         this.addRibbonIcon('message-square', 'Jenni chat', (evt) => {
@@ -61,7 +61,6 @@ export default class MyPlugin extends Plugin {
     }
 
     onunload() {
-        this.app.workspace.detachLeavesOfType(VIEW_TYPE)
     }
 
     async loadSettings() {
@@ -153,10 +152,10 @@ export default class MyPlugin extends Plugin {
 
 }
 
-class MyPluginSettingTab extends PluginSettingTab {
-    plugin: MyPlugin;
+class AISettingTab extends PluginSettingTab {
+    plugin: JenniPlugin;
 
-    constructor(app: App, plugin: MyPlugin) {
+    constructor(app: App, plugin: JenniPlugin) {
         super(app, plugin);
         this.plugin = plugin;
     }
