@@ -3,7 +3,7 @@ import { createApp, App as VueApp } from 'vue';
 
 import App from './App.vue';
 
-export const VIEW_TYPE: string = 'my-view';
+export const VIEW_TYPE: string = 'jenni-chat-view';
 
 export class MyView extends ItemView {
     vueapp: VueApp;
@@ -24,7 +24,7 @@ export class MyView extends ItemView {
 
         container.empty();
         let content = container.createEl("div", {
-            cls: "my-plugin-view"
+            cls: "jenni-chat-view"
         });
         this.vueapp = createApp(App);
         this.vueapp.mount(content);

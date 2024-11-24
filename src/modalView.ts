@@ -22,7 +22,7 @@ export class ModalView extends ItemView {
         const container = this.containerEl.children[1];
         container.empty();
         let content = container.createEl("div", {
-            cls: "my-plugin-view"
+            cls: "jenni-chat-view"
         });
         this.vueapp = createApp(App);
         this.vueapp.mount(content);
