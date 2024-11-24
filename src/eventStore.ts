@@ -7,7 +7,6 @@ export const useEventStore = defineStore('event', {
   }),
   actions: {
     sendSignal() {
-      console.log('Sender is sending the signal...');
       this.signalReceived = true; // 更新状态，表示信号已接收
     },
     resetSignal() {

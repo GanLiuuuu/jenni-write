@@ -33,7 +33,6 @@ const content = ref('');
 const currentMessageId = ref(0); 
 const copyMessage = (message: string) => {
     navigator.clipboard.writeText(message).then(() => {
-        console.log('Message copied to clipboard');
         new Notice("copied!");
     }).catch((error) => {
         console.error('Failed to copy message: ', error);
@@ -88,7 +87,6 @@ const openai = new OpenAI({
 });
 
 async function gpt2(message: string) {
-    console.log('send');
     const chatMessages = messages.value.map(msg => ({
         role: msg.role === 'user' ? 'user' : 'assistant', 
         content: msg.message
@@ -107,7 +105,6 @@ async function gpt2(message: string) {
             if (part.choices[0].delta.content) {
                 responseContent += part.choices[0].delta.content; // 逐步接收内容
                 updateContent(responseContent); // 更新内容
-                console.log(responseContent);
             }
         }
     } catch (error) {

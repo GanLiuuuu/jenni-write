@@ -124,7 +124,6 @@ export default class JenniPlugin extends Plugin {
         const stringStore = useStringStore();
         this.vueapp.mount(content);
         eventStore.$subscribe(() => {
-            console.log('Receiver has received the signal!'); 
             const cursor = editor.getCursor();
             editor.replaceRange('', { line: cursor.line, ch: cursor.ch-1 }, { line: cursor.line, ch: cursor.ch  });
             editor.replaceRange(
@@ -141,7 +140,6 @@ export default class JenniPlugin extends Plugin {
         });
     const handleClickOutside = (event: MouseEvent) => {
         if (!content.contains(event.target as Node)) {
-            console.log('clicked outside of content');
             this.vueapp.unmount();
             content.remove();
             document.removeEventListener("mousedown", handleClickOutside);

@@ -75,7 +75,6 @@
   
       const { data } = response.data;
       data.forEach(element => {
-        console.log(element)
       });
       suggestions.value = data.map(paper => ({
         authorNames: paper.authors.map((author) => author.name),
@@ -100,7 +99,6 @@
     
   };
   function onViewClicked(item: any){
-    console.log(item.url);
     window.open(item.url, '_blank');
   };
   function parseBibTeX(bibtexStr: string): { [key: string]: string } {
