@@ -14,7 +14,7 @@ export class MyView extends ItemView {
         return VIEW_TYPE;
     }
     getDisplayText(): string {
-        return "Jenni Chat";
+        return "Jenni chat";
     }
     getIcon(): string {
         return "message-square";

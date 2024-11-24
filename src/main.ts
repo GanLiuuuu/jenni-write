@@ -162,11 +162,11 @@ class AISettingTab extends PluginSettingTab {
 
         containerEl.empty();
 
-        containerEl.createEl('h1', { text: 'API Setting' });
+        containerEl.createEl('p', { text: 'API Setting' });
         
         new Setting(containerEl)
-            .setName('OpenAI API Key')
-            .setDesc('Enter your OpenAI API key here.')
+            .setName('OpenAI key')
+            .setDesc('Enter your key here.')
             .addText(text => 
                 text
                     .setValue(this.plugin.settings.myKey)

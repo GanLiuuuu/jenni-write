@@ -38,3 +38,15 @@ Interact with Jenni, an AI-powered writing assistant that helps you improve your
 ## Get Started
 
 Start enhancing your research and writing today with the Obsidian plugin! Feel free to explore its features and experience how it can simplify your academic work.
+
+---
+
+## API Usage
+
+This plugin utilizes the Semantic Scholar API for citation searches. The API endpoint used is:
+
+```javascript
+const url = "https://api.semanticscholar.org/graph/v1/paper/search";
+```
+Additionally, the plugin submits queries to ChatGPT to provide writing assistance through the AI-powered assistant, Jenni.
+
